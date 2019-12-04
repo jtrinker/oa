@@ -36,16 +36,6 @@ class Dashboard extends React.Component {
     this.setState({ endPoint: endPointUrl }, () => this.getStockData(this.state.endPoint));
   }
 
-  // getStockData = (url) => {
-  //   axios.get(url)
-  //     .then(result => this.setState({
-  //       stockData: result.data.data
-  //     }, () => {console.log(this.state.stockData)})) // view array output of data fetch
-  //     .catch(error => this.setState({
-  //       error
-  //     }));
-  // }
-
   async getStockData (url) {
     this.setState({ isLoading: true });
     try {
