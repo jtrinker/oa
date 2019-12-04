@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import uuid from 'react-uuid';
 import { Button, Card, Row, Col, Checkbox } from 'react-materialize';
 import './App.css';
 import { buildEndpoint } from './helpers.js'
@@ -8,13 +9,14 @@ class Dashboard extends React.Component {
   state = {
     endPoint: '',
     stockData: [],
-    symbols: []
+    symbols: [],
+    error: null
   }
 
   setTicker = (event) => {
     if (event.target.checked) {
       this.setState({
-        symbols: [ ...this.state.symbols, event.target.value]
+        symbols: [...this.state.symbols, event.target.value]
       });
     } else {
       let nextSymbols = [...this.state.symbols]; 
@@ -30,12 +32,22 @@ class Dashboard extends React.Component {
   createEndpointUrl = () => {
     const tickerSymbols = this.state.symbols;
     const endPointUrl = buildEndpoint(tickerSymbols);
-    this.setState({ endPoint: endPointUrl });
+    this.setState({ endPoint: endPointUrl }, () => this.getStockData(this.state.endPoint));
+  }
+
+  getStockData = (url) => {
+    axios.get(url)
+      .then(result => this.setState({
+        stockData: result.data.data
+      }, () => {console.log(this.state.stockData)})) // view array output of data fetch
+      .catch(error => this.setState({
+        error
+      }));
   }
 
   render() {
     return (
-        <StockPicker bubbleTicker={this.setTicker} createEndpointUrl={this.createEndpointUrl} />
+        <StockPicker bubbleTicker={this.setTicker} createEndpointUrl={this.createEndpointUrl} data={this.state.stockData} />
     )
   }
 }
@@ -50,6 +62,14 @@ class StockPicker extends React.Component {
   }
 
   render () {
+    const stockComponents = this.props.data.map((stock) => (
+      <div className="col s4" key={uuid()}>
+          <Stock 
+            stock={stock}
+          /> 
+      </div>
+    ));
+    
     return (
       <div className="container stock-picker">
         <div className="row">
@@ -57,7 +77,7 @@ class StockPicker extends React.Component {
             <Checkbox label="spy" value="spy" className="ticker-check" onChange={this.toggleTicker} />
           </div>
           <div className="col s4 middle">
-            <Checkbox label="vix" value="vix" className="ticker-check" onChange={this.toggleTicker} />
+            <Checkbox label="goog" value="goog" className="ticker-check" onChange={this.toggleTicker} />
           </div>
           <div className="col s4 right">
             <Checkbox label="tlt" value="tlt" className="ticker-check" onChange={this.toggleTicker} />
@@ -66,6 +86,24 @@ class StockPicker extends React.Component {
         <div className="row">
           <Button small onClick={this.submitSymbols}>Get Ticker Data</Button>
         </div>
+        <hr />
+        <div className="row">
+          {stockComponents}
+        </div>
+      </div>
+    )
+  }
+}
+
+class Stock extends React.Component {
+  render () {
+    return (
+      <div>
+            <h2>{this.props.stock.name}</h2>
+            <p>Yesterday Close: <span>{this.props.stock.close_yesterday}</span></p>
+            <p>1 Day Change: <span>{this.props.stock.day_change}</span></p>
+            <p>Day High: <span>{this.props.stock.day_high}</span></p>
+            <p>Day Low: <span>{this.props.stock.day_low}</span></p>
       </div>
     )
   }

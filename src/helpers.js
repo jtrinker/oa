@@ -12,7 +12,7 @@ export const buildEndpoint = (tickerArray) => {
         }
     });
     
-    let endPoint = ROOT + symbolString + '?api_token' + TOKEN;
+    let endPoint = ROOT + symbolString + '&api_token' + TOKEN;
     return endPoint;
 };
   
