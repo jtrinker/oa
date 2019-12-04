@@ -6,6 +6,7 @@ import { buildEndpoint } from './helpers.js'
 
 class Dashboard extends React.Component {
   state = {
+    endPoint: '',
     stockData: [],
     symbols: []
   }
@@ -26,13 +27,15 @@ class Dashboard extends React.Component {
     }
   }
 
+  createEndpointUrl = () => {
+    const tickerSymbols = this.state.symbols;
+    const endPointUrl = buildEndpoint(tickerSymbols);
+    this.setState({ endPoint: endPointUrl });
+  }
+
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <StockPicker bubbleTicker={this.setTicker} />
-        </div>
-      </div>
+        <StockPicker bubbleTicker={this.setTicker} createEndpointUrl={this.createEndpointUrl} />
     )
   }
 }
@@ -40,16 +43,29 @@ class Dashboard extends React.Component {
 class StockPicker extends React.Component {
   toggleTicker = (event) => {
     this.props.bubbleTicker(event)
-  } 
+  }
+  
+  submitSymbols = () => {
+    this.props.createEndpointUrl();
+  }
 
   render () {
     return (
-      <div className="col s12">
-        <Checkbox label="spy" value="spy" className="ticker-check" onChange={this.toggleTicker} />
-        <Checkbox label="vix" value="vix" className="ticker-check" onChange={this.toggleTicker} checked={this.isChecked} />
-        <Checkbox label="tlt" value="tlt" className="ticker-check" onChange={this.toggleTicker} checked={this.isChecked} />
-
-        <Button large>Get Ticker Data</Button>
+      <div className="container stock-picker">
+        <div className="row">
+          <div className="col s4">
+            <Checkbox label="spy" value="spy" className="ticker-check" onChange={this.toggleTicker} />
+          </div>
+          <div className="col s4 middle">
+            <Checkbox label="vix" value="vix" className="ticker-check" onChange={this.toggleTicker} />
+          </div>
+          <div className="col s4 right">
+            <Checkbox label="tlt" value="tlt" className="ticker-check" onChange={this.toggleTicker} />
+          </div>
+        </div>
+        <div className="row">
+          <Button small onClick={this.submitSymbols}>Get Ticker Data</Button>
+        </div>
       </div>
     )
   }

@@ -14,3 +14,23 @@ header {
 .logo {
   width: 58px;
 }
+
+.stock-picker {
+  margin-top: 50px;
+}
+
+label {
+  text-transform: uppercase;
+}
+
+.middle {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+button {
+  margin-top: 11px;
+}

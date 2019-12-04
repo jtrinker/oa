@@ -2,7 +2,7 @@
 const ROOT = 'https://api.worldtradingdata.com/api/v1/stock?symbol=';
 const TOKEN = '=z5IhiYKbAvjvwC05hl1759smWFH5tHMw5HobVE72IRV5d0hlg3863Ygzym5G';
 
-export function buildEndpoint(tickerArray) {
+export const buildEndpoint = (tickerArray) => {
     let symbolString = '';
     tickerArray.forEach((value, index) => {
         if (index === tickerArray.length - 1) {
