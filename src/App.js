@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import uuid from 'react-uuid';
-import { Button, Card, Row, Col, Checkbox } from 'react-materialize';
+import { Button, Card, Row, Col, Checkbox, ProgressBar } from 'react-materialize';
 import './App.css';
 import { buildEndpoint } from './helpers.js'
 
@@ -9,6 +9,7 @@ class Dashboard extends React.Component {
   state = {
     endPoint: '',
     stockData: [],
+    isLoading: false,
     symbols: [],
     error: null
   }
@@ -63,7 +64,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-        <StockPicker bubbleTicker={this.setTicker} createEndpointUrl={this.createEndpointUrl} data={this.state.stockData} />
+        <StockPicker bubbleTicker={this.setTicker} createEndpointUrl={this.createEndpointUrl} data={this.state.stockData} isLoading={this.state.isLoading} />
     )
   }
 }
@@ -78,6 +79,9 @@ class StockPicker extends React.Component {
   }
 
   render () {
+    if (this.props.isLoading) {
+      return <ProgressBar />
+    }
     const stockComponents = this.props.data.map((stock) => (
       <div className="col s4" key={uuid()}>
           <Stock 
