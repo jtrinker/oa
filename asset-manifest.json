@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/jtrinker/oa/static/css/main.6e3aae00.chunk.css",
+    "main.js": "/jtrinker/oa/static/js/main.6cf1966e.chunk.js",
+    "main.js.map": "/jtrinker/oa/static/js/main.6cf1966e.chunk.js.map",
+    "runtime-main.js": "/jtrinker/oa/static/js/runtime-main.921b3f43.js",
+    "runtime-main.js.map": "/jtrinker/oa/static/js/runtime-main.921b3f43.js.map",
+    "static/js/2.99444517.chunk.js": "/jtrinker/oa/static/js/2.99444517.chunk.js",
+    "static/js/2.99444517.chunk.js.map": "/jtrinker/oa/static/js/2.99444517.chunk.js.map",
+    "index.html": "/jtrinker/oa/index.html",
+    "precache-manifest.f2ed5df252f750221606a9418df54fec.js": "/jtrinker/oa/precache-manifest.f2ed5df252f750221606a9418df54fec.js",
+    "service-worker.js": "/jtrinker/oa/service-worker.js",
+    "static/css/main.6e3aae00.chunk.css.map": "/jtrinker/oa/static/css/main.6e3aae00.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.921b3f43.js",
+    "static/js/2.99444517.chunk.js",
+    "static/css/main.6e3aae00.chunk.css",
+    "static/js/main.6cf1966e.chunk.js"
+  ]
+}
