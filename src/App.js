@@ -11,9 +11,19 @@ class Dashboard extends React.Component {
   }
 
   setTicker = (event) => {
-    console.log(event.target.value);
-    // copy symbols array and push event.target.value
-    // this.setState({ symbols: nextSymbols });
+    if (event.target.checked) {
+      this.setState({
+        symbols: [ ...this.state.symbols, event.target.value]
+      });
+    } else {
+      let nextSymbols = [...this.state.symbols]; 
+      let index = nextSymbols.indexOf(event.target.value);
+
+      if (index !== -1) {
+        nextSymbols.splice(index, 1);
+        this.setState({ symbols: nextSymbols });
+      }
+    }
   }
 
   render() {
@@ -28,16 +38,16 @@ class Dashboard extends React.Component {
 }
 
 class StockPicker extends React.Component {
-  addTicker = (event) => {
+  toggleTicker = (event) => {
     this.props.bubbleTicker(event)
   } 
 
   render () {
     return (
       <div className="col s12">
-        <Checkbox label="spy" value="spy" className="ticker-check" onChange={this.addTicker} checked={this.isChecked} />
-        <Checkbox label="vix" value="vix" className="ticker-check" onChange={this.addTicker} checked={this.isChecked} />
-        <Checkbox label="tlt" value="tlt" className="ticker-check" onChange={this.addTicker} checked={this.isChecked} />
+        <Checkbox label="spy" value="spy" className="ticker-check" onChange={this.toggleTicker} />
+        <Checkbox label="vix" value="vix" className="ticker-check" onChange={this.toggleTicker} checked={this.isChecked} />
+        <Checkbox label="tlt" value="tlt" className="ticker-check" onChange={this.toggleTicker} checked={this.isChecked} />
 
         <Button large>Get Ticker Data</Button>
       </div>
